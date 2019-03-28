@@ -1,52 +1,62 @@
 <template>
   <section>
-      <div class="tab">
-        <span>全部类目<i></i></span>
-        <span>附近商家<i></i></span>
-        <span>智能排序<i></i></span>
-        <span>筛选<i></i></span>
-      </div>
-      <div class="dl_list">
+    <Tablist></Tablist>
+      <div class="dl_list" v-for="item in minejson" :key="item.id">
           <dl>
-              <dt><img src="../assets/images/foot1.PNG" alt=""></dt>
+              <dt><img :src="item.frontImg" alt=""></dt>
               <dd>
-                <h3>小木船朝鲜牛肉火锅(马连洼店)</h3>
-                <p class="one"><span>￥114/人</span><span>农业大学西区 100m</span></p>
-                <p class="two"><b>朝鲜牛肉火锅</b><b>农业大学西区第三名</b><b>回头克多</b></p>
+                <h3>{{item.name}}</h3>
+                <p><startS1 :star="item.avgScore"></startS1></p>
+                <p class="one"><span>￥{{item.avgPrice}}/人</span><span>{{item.areaName}} {{item.distance}}</span></p>
+                <p class="two"><b>{{item.cateName}}</b></p>
                 <i>支持预订</i>
               </dd>
           </dl>
           <div class="love">
-              <h2><img src="../assets/images/tuan.PNG" alt=""><span>8人餐888元</span></h2>
-              <h2><img src="../assets/images/juan.PNG" alt=""><span>93代100元</span></h2>
+              <h2  v-for="(i,index) in item.maidan" :key="index"><img :src="i.icon" alt=""><span>{{i.content}}</span></h2>
           </div>
       </div>
   </section>
 </template>
 
 <script>
-
+import Tablist from '../components/Tab_list.vue'
+import jsonList from '../assets/mock/list.json'
+import startS1 from '../components/startS1.vue'
 export default {
-       
+    components:{Tablist,startS1},
+    data() {
+      return{
+        minejson:jsonList.data,
+      }
+    },
+    created(){
+      let vm = this;
+      vm.$bus.$on('searchEvent',(val)=>{
+          vm.minejson = jsonList.data
+          vm.minejson = vm.minejson.filter(item => {  //条件过滤
+          return item.name.indexOf(val) !== -1;  //可以返回多个   全等-1符合条件
+        });
+      })
+      vm.$bus.$on('sortNum',(id)=>{
+          //判断点击的id是否为价格排序  id = 3
+          if(id == 3){
+              vm.minejson.sort((a,b)=>{
+                  return a.avgPrice - b.avgPrice
+              })
+          }else if(id == 2) {
+              vm.minejson.sort((a,b)=>{
+                  return b.avgScore - a.avgScore
+              })
+          }
+      })
+    }
 }
 </script>
 
-<style>
+<style scoped>
 section{
   width: 100%;
-  flex:1;
-}
-.tab{
-  width: 100%;
-  height:50px;
-  display:flex;
-  text-align:center;
-  line-height:50px;
-  border-bottom:1px solid #ccc;
-}
-span{
-  flex:1;
-  color:#666;
 }
 .dl_list{
   width:100%;
@@ -67,14 +77,14 @@ dt{
 img{
   width:100%;
   height:100%;
-  padding:3px;
+  padding:5px;
 }
 dd{
   margin-left:5px;
   width: 70%;
   height:120px;
   border-bottom:1px solid #ccc;
-  line-height:30px;
+  line-height:23px;
   font-size:14px;
 }
 h3{
@@ -83,8 +93,14 @@ h3{
 .one{
   color:#666;
 }
+.one span{
+  padding:0 5px;
+}
 .two{
   color:#f90;
+}
+.two b{
+  padding:0 3px;
 }
 i{
   color:blue;
@@ -94,11 +110,17 @@ i{
   height:60px;
 }
 h2{
+  width: 100%;
+  padding-left:30%;
   line-height:30px;
-  margin-left:38%;
+  display:flex;
+}
+h2 img{
+  width:25px;
+  height:25px;
+  margin:0px 5px;
 }
 h2 span{
-  flex:0;
   font-size:14px;
   color:#666;
 }
