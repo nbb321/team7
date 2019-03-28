@@ -3,8 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router';
-import "./assets/font/iconfont.css"
-
+import "./assets/font/iconfont.css";
+import "./assets/css/index.css";
+Vue.prototype.$bus = new Vue();
+import axios from "axios";
+Vue.prototype.$ajax = axios;
 
 Vue.config.productionTip = false
 

@@ -3,7 +3,7 @@
         <span class="iconfont icon-return"></span>
         <div class="input">
             <span class="iconfont icon-search"></span>
-            <input type="text" placeholder="输入商品名、品类或商圈">
+            <input type="text" placeholder="输入商品名、品类或商圈" v-model="text" @keyup.enter="search">
         </div>
         <span class="iconfont icon-wode"></span>
     </header>
@@ -11,11 +11,26 @@
 
 <script>
 export default {
-
+    props:["list"],
+    data(){
+        return{
+            text:"",
+            opts:[]
+        }
+    },
+    methods:{
+        search(){
+           this.opts=this.list
+           this.opts= this.list.filter(item=>{
+                return item.name.indexOf(this.text)!==-1
+            })
+            this.$bus.$emit("addnum",this.opts)
+        }
+    }
 }
 </script>
 
-<style scoped>
+<style>
 header{
     width:100%;
     height:44px;

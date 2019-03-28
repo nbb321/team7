@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import firstcom from '@/components/firstcom.vue'
+import App from '@/App.vue'
 
 Vue.use(Router)
 
 export default new Router({
     routes: [{
         path: '/',
-        name: 'firstcom',
-        component: firstcom
+        name: 'App',
+        component: App
     }]
 })
