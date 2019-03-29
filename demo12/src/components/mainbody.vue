@@ -1,21 +1,14 @@
 <template>
     <div class="body">
-    <div class="bodytop">
-        <ul>
-            <li>排序</li>
-            <li>筛选</li>
-            <li>正序</li>
-            <li>倒序</li>
-        </ul>
-    </div>
-    <div class="title">
+
+     <div class="title" v-for="(item,index) in list" :key="index">
         <div class="left">
-            <img src="../assets/images/q_03.gif" alt="">
+            <img :src="item.frontImg" alt="">
         </div>
         <div class="right">
             <div class="up">
-                <p class="biao">小木船潮鲜牛肉火锅(马连洼店)</p>
-                <p class="xing"><span><img src="../assets/images/xing_03.gif" alt=""><img src="../assets/images/xing_03.gif" alt=""><img src="../assets/images/xing_03.gif" alt=""></span></p>
+                <p class="biao">{{item.cateName}}</p>
+                <p class="xing">{{item.avgScore}} 价格：<span class="price">{{item.avgPrice}}</span>/人</p>
                 <p class="con">牛肉火锅</p>
                 <p class="yuding">支持预订</p>
             </div>
@@ -24,114 +17,59 @@
                 <p><img src="../assets/images/tuan_06.gif" alt=""><span>93代100元</span></p>
             </div>
         </div>
-    </div>
-    <div class="title">
-        <div class="left">
-            <img src="../assets/images/q_06.gif" alt="">
-        </div>
-        <div class="right">
-            <div class="up">
-                <p class="biao">小木船潮鲜牛肉火锅(马连洼店)</p>
-                <p class="xing"><span><img src="../assets/images/xing_03.gif" alt=""><img src="../assets/images/xing_03.gif" alt=""><img src="../assets/images/xing_03.gif" alt=""></span></p>
-                <p class="con">牛肉火锅</p>
-                <p class="yuding">支持预订</p>
-            </div>
-            <div class="bottom">
-                <p class="one"><img src="../assets/images/tuan_03.gif" alt=""><span>8人餐888元</span></p>
-                <p><img src="../assets/images/tuan_06.gif" alt=""><span>93代100元</span></p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="title">
-        <div class="left">
-            <img src="../assets/images/q_12.gif" alt="">
-        </div>
-        <div class="right">
-            <div class="up">
-                <p class="biao">小木船潮鲜牛肉火锅(马连洼店)</p>
-                <p class="xing"><span><img src="../assets/images/xing_03.gif" alt=""><img src="../assets/images/xing_03.gif" alt=""><img src="../assets/images/xing_03.gif" alt=""></span></p>
-                <p class="con">牛肉火锅</p>
-                <p class="yuding">支持预订</p>
-            </div>
-            <div class="bottom">
-                <p class="one"><img src="../assets/images/tuan_03.gif" alt=""><span>8人餐888元</span></p>
-                <p><img src="../assets/images/tuan_06.gif" alt=""><span>93代100元</span></p>
-            </div>
-        </div>
-    </div>
-    <div class="title">
-        <div class="left">
-            <img src="../assets/images/q_08.gif" alt="">
-        </div>
-        <div class="right">
-            <div class="up">
-                <p class="biao">小木船潮鲜牛肉火锅(马连洼店)</p>
-                <p class="xing"><span><img src="../assets/images/xing_03.gif" alt=""><img src="../assets/images/xing_03.gif" alt=""><img src="../assets/images/xing_03.gif" alt=""></span></p>
-                <p class="con">牛肉火锅</p>
-                <p class="yuding">支持预订</p>
-            </div>
-            <div class="bottom">
-                <p class="one"><img src="../assets/images/tuan_03.gif" alt=""><span>8人餐888元</span></p>
-                <p><img src="../assets/images/tuan_06.gif" alt=""><span>93代100元</span></p>
-            </div>
-        </div>
-    </div>
+    </div>  
     </div>
 </template>
 
 <script>
+import data from '../data/data.js'
+// console.log(data[0].data.poiList.poiInfos)
 export default {
+data(){
+    return{
+        list:[]
+    }
+},
+created(){
+   this.list=data[0].data.poiList.poiInfos
+//    console.log(this.list)
+this.$bus.$on('sortEvent',(id)=>{
+   if(id==3){
+       this.list=this.list.sort(function(a,b){
+           return a.avgPrice-b.avgPrice
+       })
+   }
+})
+let that=this;
+this.$bus.$on('inp',(val)=>{
+    that.list=data[0].data.poiList.poiInfos
+   that.list= that.list.filter(function(ite){
+        return ite.cateName.indexOf(val)!==-1
+    })
+})
+}
 
 }
 </script>
 
-<style>
+<style scoped>
 .body{
-    display: flex;
     flex:1;
-    /* background: darkkhaki; */
-    flex-direction: column;
-}
-.bodytop{
+    overflow-y:scroll;
     width: 100%;
-    height: 40px;
-    display: flex;
+    /* position: fixed; */
 }
-.bodytop ul{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    border:1px #ccc solid;
-        background: #fafafa;
-} 
-.bodytop ul li{
-    width: 23%;
-    height: 100%;
-
-    /* background: #ccc; */
-    margin-left: 5px;
-    text-align: center;
-    line-height: 40px;
-    color: #989898;
-} 
 .title{
     width: 100%;
-    height: 150px;
-    /* background: darkorange; */
-    display: flex;
-    flex-direction: row;
+    height:150px;
     border-bottom:1px #ccc solid;
     background: #fafafa;
-    margin-top:1px;
+    display:flex;
+    justify-content: space-around;
 }
 .left{
 width: 30%;
 height: 100%;
-/* background: salmon; */
-display: flex;
-margin-left: 3px;
 }
 .left img{
     width: 80px;
@@ -139,12 +77,13 @@ margin-left: 3px;
     margin:5px 15px;
 }
 .right{
-    width: 69%;
+    width: 70%;
     height: 80px;
-    border-bottom: 1px #ccc solid;
     font-size: 14px;
     color: #333333;
-    padding-left: 3px;
+}
+.up{
+    width:100%;
 }
 .biao{
     font-size:16px;
@@ -161,19 +100,16 @@ margin-left: 3px;
     color: #6cbab2;
 }
 .bottom{
-    width: 100%;
+    width:100%;
     height: 50px;
     display: flex;
     flex-direction: column;
+    line-height: 55px;
     
     }
     .bottom p{
         width: 100%;
         height: 20px;
-        margin-left: 10px;
-    }
-    .one{
-        margin-top:5px;
     }
     .bottom p span{
      color: #898989;

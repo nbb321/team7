@@ -1,6 +1,7 @@
 <template>
   <div id="app">
       <headercom></headercom>
+      <sortcom @sortEvent="add"></sortcom>
       <mainbody></mainbody>
       <footercom></footercom>
     <router-view/>
@@ -11,13 +12,21 @@
 import headercom from './components/headerCom'
 import mainbody from './components/mainbody'
 import footercom from './components/footerCom'
+import sortcom from './components/sortCom'
 export default {
   name: 'App',
   components:{
     headercom,
     footercom,
-    mainbody
-  }
+    mainbody,
+    sortcom
+  },
+  methods:{
+    add(id){
+      console.log(id)
+    }
+  },
+
 }
 </script>
 <style>
@@ -30,13 +39,11 @@ export default {
 html,body{
   width:100%;
   height: 100%;
-  overflow: hidden;
 }
-#app {
- width: 100%;
- height: 100%;
- display: flex;
- /* background: green; */
- flex-direction: column;
+#app{
+  width: 100%;
+  height: 100%;
+  display:flex;
+  flex-direction: column;
 }
 </style>

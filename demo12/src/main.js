@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import "./assets/font/iconfont.css"
+Vue.prototype.$bus=new Vue()//xian
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

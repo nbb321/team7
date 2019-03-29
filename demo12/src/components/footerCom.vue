@@ -10,9 +10,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .footer{
-    display: flex;
+    /* display: flex; */
     background: fff;
 }
 </style>

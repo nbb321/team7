@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <span class="iconfont icon-chevron-thin-left"></span>
-        <input type="text" placeholder="输入商家名、品类或商圈">
+        <input type="text" placeholder="输入商家名、品类或商圈" @keyup.enter="$bus.$emit('inp',$event.target.value)">
         <span class="iconfont icon-wode"></span>
     </div>
 </template>
@@ -12,15 +12,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .header{
     width: 100%;
-    height: 50px;
+    height:47px;
     background: #fafafa;
-    display: flex;
     flex-direction: row;
     justify-content: space-around;
-    line-height: 50px;
+    line-height: 40px;
 }
 .iconfont{
     font-size: 20px;
