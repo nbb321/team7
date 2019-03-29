@@ -1,0 +1,121 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.app header {
+    width: 100%;
+    height: 44px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.app header .search {
+    width: 280px;
+    height: 30px;
+    background: #ccc;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.app header .search input {
+    width: 250px;
+    height: 100%;
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.app .list {
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.app .list .menu {
+    width: 250px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.app .list .menu span {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app .list .menu span.active {
+    color: orange;
+}
+
+.app .list .dan {
+    padding: 3px 6px;
+    border: 1px solid orange;
+    border-radius: 10px;
+    color: orange;
+}
+
+.wrap {
+    width: 100%;
+    height: 100px;
+}
+
+.content {
+    width: 100%;
+    flex: 1;
+    display: flex;
+}
+
+.content .left {
+    width: 100px;
+    height: 100%;
+    background: #ccc;
+}
+
+.content .left ul li {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+.content .left ul li.liActive {
+    background: #fff;
+}
+
+.content .right {
+    height: 100%;
+    flex: 1;
+    background: #fff;
+    overflow-y: auto;
+}
